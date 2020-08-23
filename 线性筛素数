@@ -12,8 +12,8 @@ void init() {
 		for (int j=0;j<=topp && prime[j]*i<MAXN;j++)
 		{
 			pflag[i*prime[j]] = true;     //相乘之后倍数一定不是质数，往后筛了好几位
-			if (i%prime[j] == 0)break;   //没懂，删了好像也没啥错，也许是用来优化的
-		}
+			if (i%prime[j] == 0)break;   //6会被2和3筛，加上这一句可以使一个数只被一个质数筛掉，可以提高效率
+			}
 	}
 	for (int i=0;i<=topp;i++)
 		cout<<prime[i]<<endl;
