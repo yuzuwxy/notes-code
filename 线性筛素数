@@ -1,0 +1,25 @@
+#include<iostream>
+using namespace std;
+#define MAXN 200      //筛出200以内的素数
+bool pflag[MAXN];
+int prime[MAXN]；  //int为0，bool为false
+int topp=-1;   //位置
+void init() {
+	for (int i=2;i<MAXN;i++)   //不要等号，因为判别没有=，不然会把最后一个数包括进去
+	{
+		if (!pflag[i])   
+			prime[++topp] = i;
+		for (int j=0;j<=topp && prime[j]*i<MAXN;j++)
+		{
+			pflag[i*prime[j]] = true;     //相乘之后倍数一定不是质数，往后筛了好几位
+			if (i%prime[j] == 0)break;   //没懂，删了好像也没啥错
+		}
+	}
+	for (int i=0;i<=topp;i++)
+		cout<<prime[i]<<endl;
+}
+ 
+int main()
+{
+	init();
+}
