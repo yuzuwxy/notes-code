@@ -129,7 +129,23 @@ vector中添加元素：
     //把a中的从a.begin()（包括它）到a.end()（不包括它）的元素复制到b中，从b.begin()+1的位置（包括它）开始复制，覆盖掉原有元素
     copy(a.begin(),a.end(),b.begin()+1);
 
-    //在a中的从a.begin()（包括它）到a.end()（不包括它）的元素中查找10，若存在返回其在向量中的位置
+    //在a中的从a.begin()（包括它）到a.end()（不包括它）的元素中查找10，若存在返回其在向量中的位置（！！是位置）。
+    //如果查找失败即没有这个函数，返回的是a.end()的位置，即最后一个元素下标加一（！！！）
      find(a.begin(),a.end(),10);
+    
+    lower_bound()函数：返回序列中第一个大于或等于指定值的数的位置
+    upper_bound()函数：返回序列中第一个大于指定值的数的位置（！！！注意都是位置）
+    //用法如下：
+      vector<int>::iterator it=lower_bound(nums.begin(),nums.end(),target);  //迭代器的取得位置（注意不能直接int a=...,因为函数取得的是位置而不是数值）
+      int ans=&*it-&nums[0];         //取地址符
+      return ans;      /总的来说与find()格式类似
+      本质是使用二分法找到，时间复杂度为log
+
+find()函数的使用：
+    int temp1[]={ 1,3,2,4,5,0 };
+    vector<int> temp(temp1,temp1+6);   //将temp1数组中的元素赋给temp
+    vector<int>::iterator it=find(temp.begin(),temp.end(),3);            //，使用迭代器，返回的是地址
+    int index=&*it-&temp[0];///放入迭代器中得到容器中的位置     
+    printf("%d\n",index);
 
 /*学过也没怎么用过，特作此摘录，供当前及以后学习*/
