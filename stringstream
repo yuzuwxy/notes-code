@@ -1,0 +1,7 @@
+stringstream是C++提供的字符串流，要使用stringstream必须包含其头文件：
+        #include<sstream>
+        using namespace std;
+        stringstream ss
+<sstream > 库定义了三种类：istringstream、ostringstream和stringstream，分别用来进行流的输入、输出和输入输出操作。一般情况下使用stringstream就足够，因为字符串要频繁的涉及到输入输出。
+通过插入器(<<)和析取器(>>)这两个运算符可以直接对stringstream上的数据输入输出，而将stringstream中的全部数据输出则是使用成员函数str()，其有两种形式：
+        
