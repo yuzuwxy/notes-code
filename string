@@ -1,4 +1,4 @@
-一、C++中字符串类型string的简单用法
+C++中字符串类型string的简单用法
     string 是 C++ 提供的字符串类，和 C 类型的字符串（char str[15]）相比，具有不限长度及其他优点，类似vector数组，可以方便的进行数据的增删改查，并可以进行排序交换与遍历。
     要使用 string， 必须包含头文件string，并包含std命名空间：
             #include<string>
