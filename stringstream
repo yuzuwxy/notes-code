@@ -30,16 +30,92 @@ ss.clear()成员函数：
     通过clear()成员函数可以清除流的错误状态，主要用在stringstream重复使用时或者多个stringstream对象构造时清空，不然之前的缓冲就停留在输入输出流中
     对于同一个stringstream对象重复赋值，就需要先对流使用clear()函数清空流的状态，此时流占用的内存没有改变，会一直增加（stringstream不主动释放内存），若想改变内存（一般是清除内存，减少
    内存消耗），需要再配合使用str("")清空stringstream的缓存。
-   	
-   	stringstream ss;
-	int a,b;
-	ss<<"80";
-	ss>>a;
-	cout<<ss.str()<<' '<<ss.str().length()<<endl;
-	ss.clear();
-	ss.str("");							
-	cout<<ss.str()<<' '<<ss.str().length()<<endl;
-	ss<<"90";
-	ss>>b;
-	cout<<ss.str()<<' '<<ss.str().length()<<endl;
-        return 0;
+		代码示例：
+			stringstream ss;
+			int a,b;
+			ss<<"80";
+			ss>>a;
+			cout<<ss.str()<<' '<<ss.str().length()<<endl;
+			ss.clear();
+			ss.str("");
+			cout<<ss.str()<<' '<<ss.str().length()<<endl;						//输出内容为
+			ss<<"90";										//80 2
+			ss>>b;											// 0
+			cout<<ss.str()<<' '<<ss.str().length()<<endl;						//90 2
+		
+		如果没有ss.clear() 语句，输出内容为
+			80 2
+			0
+			0
+		如果没有ss.str(“”) 语句，输出内容为
+			80 2
+			80 2
+			8090 4
+		//跟说好的不一样？？那就只记住要重置流中的内容，要ss.str() 和 ss.clear() 一起用就好啦
+stringstream和fstream
+	通过重载的<<和>>运算符可以将文件流中的数据输出到C++字符串中，它们之间的媒介是缓冲区streambuf，可由流的成员函数rdbuf()读取。
+		#include <iostream>
+		#include <sstream>//stringstream流的头文件
+		#include <fstream>
+		using namespace std;
+		int main()
+		{
+       			 string str;
+        		 ifstream in;
+       			 in.open("Hello.txt");
+        		//读取文件的缓冲内容到数据流中
+        		 stringstream ss;
+       			 ss << in.rdbuf();
+       			 in.close();//关闭文件
+        		 str = ss.str();//将stringstream流中的数据赋值给string类型字符串
+			 const char* p=str.c_str();   //将字符串内容转化为C_string类型（才能输出）    //输出的时候直接cout<<p<<endl;就可
+        		 return 0;
+		}
+stringstream通常是用来做数据转换的，用于字符串和其他类型的转换
+		#include <iostream>
+		#include <string>
+		#include <sstream>
+		using namespace std;
+		int main()
+		{
+		    string str1("How are you? 123 1 4.368");
+		    stringstream ss(str1);//构造函数初始化
+		    cout<<ss.str()<<endl;
+			string str2;
+   		 	for(int i=0;i<3;i++)
+    		{
+    			ss>>str2;
+    			cout<<str2<<" ";
+			}
+			cout<<endl;
+			int a;
+			ss>>a;														
+			cout<<a<<endl;																	/*输出内容为
+			bool b;																				How are you? 123 1 4.368     //cout<<ss.str() 
+			ss>>b;																				How are you?				//三个cout<<str2' '; 
+			cout<<b<<endl;																		123							//cout<<a;
+			float c;																			1 							//cout<<b;
+			ss>>c;																				4.368						//cout<<c;
+			cout<<c<<endl;																		I am fine!					//重置后的ss             		*/
+			ss.clear();								//由上面的代码可知，从stringstream流中的数据输入字符串到一个变量里，是以遇到空格跳到下一个字符串的这样的形式连续读取的。
+			ss.str("I am fine!");//重新赋值
+			while(ss>>str2)//不断读取
+			{
+				cout<<str2<<" ";
+			}	
+			return 0;		
+		}
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
