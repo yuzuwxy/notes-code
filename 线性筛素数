@@ -65,3 +65,47 @@ int main() {
 	printf("\n");
 	return 0;
 }
+
+
+
+//又水了一道线性筛！！
+输入一个偶数 N(N<=10000)，验证4~N所有偶数是否符合哥德巴赫猜想：任一大于 2 的偶数都可写成两个质数之和。
+如果一个数不止一种分法，则输出第一个加数相比其他分法最小的方案。例如 10，10=3+7=5+5，则 10=5+5 是错误答案。
+#include<bits/stdc++.h>
+#define MAXN 10010
+using namespace std;
+
+int prime[MAXN];
+bool pflag[MAXN];
+int topp=-1;
+
+void pri(int n) {
+	for(int i=2;i<n;i++) {
+		if(!pflag[i]) prime[++topp]=i;
+		for(int j=0;j<=topp&&prime[j]*i<n;j++) {
+			pflag[prime[j]*i]=true;
+			if(i%prime[j]==0) break;
+		}
+	}
+	//for(int i=0;i<=topp;i++) cout<<prime[i]<<' ';
+	//cout<<endl;
+}
+
+void func(int x) {
+	for(int i=2;i<=x/2;i++) {
+		if(!pflag[i]&&!pflag[x-i]) {
+			printf("%d=%d+%d\n",x,i,x-i);
+			break;
+		}
+	}
+}
+
+int main() {
+	int n;
+	scanf("%d",&n);
+	pri(n);
+	for(int i=4;i<=n;i+=2) {
+		func(i);
+	}
+	return 0;
+}	
