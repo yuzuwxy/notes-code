@@ -30,7 +30,7 @@ ss.clear()成员函数：
     通过clear()成员函数可以清除流的错误状态，主要用在stringstream重复使用时或者多个stringstream对象构造时清空，不然之前的缓冲就停留在输入输出流中
     对于同一个stringstream对象重复赋值，就需要先对流使用clear()函数清空流的状态，此时流占用的内存没有改变，会一直增加（stringstream不主动释放内存），若想改变内存（一般是清除内存，减少
    内存消耗），需要再配合使用str("")清空stringstream的缓存。
-		代码示例：
+		代码示例：                                 //这里不懂了，改天问
 			stringstream ss;
 			int a,b;
 			ss<<"80";
