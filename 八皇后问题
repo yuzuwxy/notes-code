@@ -17,4 +17,52 @@
 //百度上的代码可读性过于差了
 
 //应该是第一种写法叭
-//将皇后的位置用行储存，只需要用单维数组 queen[column]=row ,表示这个皇后的位置在第column列、第row行。然后二重循环8x8。
+//将皇后的位置用行储存，只需要用单维数组 queen[column]=row ,表示这个皇后的位置在第column列、第row行。然后对列进行回溯与判断，每一列判断该列的每一行是否适合放置皇后，如果适合就存储。
+//然后对下一列进行判断
+
+#include<bits/stdc++.h>
+#include<iostream>
+#include<cstdio>
+
+using namespace std;
+
+int queen[10];
+//int row;
+//int  count;
+
+bool islegal(int curcolumn,int currow) {
+	for(int precolumn=1;precolumn<curcolumn;precolumn++) {
+		int prerow=queen[precolumn];
+		if(prerow==currow) return false;
+		
+		int rowdiff=abs(prerow-currow) ;
+		int coldiff=abs(precolumn-curcolumn);
+		if(rowdiff==coldiff) return false;
+	}
+	
+	return true;
+}
+
+int c;
+
+void eightqueen(int curcolumn) {
+	for(int row=1;row<=8;row++) {
+		if(islegal(curcolumn,row)) {
+			queen[curcolumn]=row;
+			if(curcolumn!=8) {
+				eightqueen(curcolumn+1);
+			}
+			else {
+				c++;
+			}
+		}
+	}
+}
+
+int main() {
+	eightqueen(1);
+	printf("%d\n",c);
+	return 0;
+}
+
+//我的丑陋的代码
