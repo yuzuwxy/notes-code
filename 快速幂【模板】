@@ -1,0 +1,46 @@
+#include<bits/stdc++.h>
+#define ll long long
+
+using namespace std;
+
+long long b,p,m;
+long long ans=1;
+
+ll read()
+{
+    int now=0;
+    int flag=1;
+    char s;
+    while((s<'0'||s>'9')&&(s!='-')) s=getchar();
+    if(s=='-') flag=-1,s=getchar();
+    while(s>='0'&&s<='9')
+    {
+        now*=10;
+        now+=s-'0';
+        s=getchar();
+    }
+    now=now*flag;
+    return now;
+}
+
+int main()
+{ 
+    b=read();
+    p=read();
+    m=read();
+    long long a=b;
+    long long q=p;
+    while(p>0)
+    {
+        if(p%2!=0)
+         ans=ans*b%m;
+        b=b*b%m;
+        p=p>>1;
+    }
+    if(p==0&&m==1)
+    {
+        ans=0;
+    }
+    printf("%lld^%lld mod %lld=%lld\n",a,q,m,ans);
+    return 0;
+}
