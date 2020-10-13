@@ -66,3 +66,82 @@ int main() {
 }
 
 //我的丑陋的代码
+
+
+
+
+
+//变式，思路基本相同
+
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int chess[10][10];
+int ans=0;
+int n;
+int wqueen[10],bqueen[10];
+
+bool bislegal(int curr,int curc) {
+	if(chess[curr][curc]==0||wqueen[curc]==curr) return false;
+	for(int rec=1;rec<=curc;rec++) {
+		if(wqueen[rec]==curr) return false;
+		int rdiff=abs(wqueen[rec]-curr);
+		int cdiff=abs(rec-curc);
+		if(cdiff==rdiff) return false;
+	}
+}
+bool wislegal(int currow,int curcolumn) {
+	if(chess[currow][curcolumn]==0) return false;
+	for(int rec=1;rec<=curcolumn;rec++) {
+		if(wqueen[rec]==currow) return false;
+		int rdiff=abs(wqueen[rec]-currow);
+		int cdiff=abs(rec-curcolumn);
+		if(cdiff==rdiff) return false;
+	}
+}
+
+int c;
+
+void black_queen(int curcolumn) {
+	for(int row=1;row<=n;row++) {
+		if(bislegal(row,curcolumn)) {
+			bqueen[curcolumn]=row;
+			if(curcolumn!=n) {
+				black_queen(curcolumn+1);
+			}
+			else {
+				c++;
+				return ;
+			}
+		}
+	}
+}
+
+void white_queen(int curcolumn) {
+	for(int row=1;row<=n;row++) {
+		if(wislegal(row,curcolumn)) {
+			wqueen[curcolumn]=row;
+			if(curcolumn!=n) {
+				white_queen(curcolumn+1);
+			}
+			else {
+				black_queen(1);
+				return ;
+			}
+		}
+	}
+}
+
+int main() {
+	cin>>n;
+	for(int i=1;i<=n;i++) {
+		for(int j=1;j<=n;j++) 
+			cin>>chess[i][j];
+	}
+	white_queen(1);
+	printf("%d\n",ans);
+	return 0;
+}
+
+//不一定AC，但是我赶上啦
