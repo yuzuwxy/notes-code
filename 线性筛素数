@@ -109,3 +109,62 @@ int main() {
 	}
 	return 0;
 }	
+
+
+//今日份的水
+#include<iostream>
+#include<cstdio>
+#include<algorithm>
+#include<cmath> 
+#include<string>
+#include<cstring>
+#define MAXN 10005
+
+using namespace std;
+
+int pprime[10005];
+int pflag[10005];
+int topp=-1;
+
+void prime() {
+	for(int i=2;i<MAXN;i++) {
+		if(!pflag[i]) pprime[++topp]=i;
+		for(int j=0;j<=topp&&pprime[j]*i<MAXN;j++) {
+			pflag[pprime[j]*i]=true;
+			if(i%pprime[j]==0) break;
+		}
+	}
+	//for(int i=0;i<=10;i++) {cout<<pflag[i]<<endl;}
+}
+
+int main() {
+	prime();
+	int a,b;
+	scanf("%d%d",&a,&b);
+	for(int k=a;k<=b;k++) {
+		int i=k,cnt=k;
+		if(!pflag[k]) printf("%d=%d\n",k,k);
+		else {
+			printf("%d=",i);
+			//int sq=sqrt(i);
+			for(int j=0;j<=topp&&pprime[j]<=cnt;j++)
+				if(cnt%pprime[j]==0) {
+					printf("%d",pprime[j]);
+					cnt/=pprime[j];
+					//cout<<1<<endl;
+					break;
+				}
+			//cout<<endl<<cnt<<endl;
+			for(int j=0;j<=topp&&pprime[j]<=cnt;j++) {
+				//cout<<1<<endl;
+				while(cnt%pprime[j]==0&&cnt!=1) {
+					cnt/=pprime[j];
+					//cout<<cnt<<' ';
+					printf("*%d",pprime[j]);
+				}
+			}
+			printf("\n");
+		}
+	}
+	return 0;
+}
