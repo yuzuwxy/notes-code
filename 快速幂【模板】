@@ -79,3 +79,41 @@ int main()
 
 我们能够发现，最后的结果是9*6561，而9是怎么产生的？是不是当指数为奇数5时，此时底数为9。那6561又是怎么产生的呢？
 是不是当指数为奇数1时，此时的底数为6561。所以我们能发现一个规律：最后求出的幂结果实际上就是在变化过程中所有当指数为奇数时底数的乘积。
+
+//我自己的AC快速幂
+
+#include<iostream>
+#include<cstdio>
+#include<cmath>
+#include<string>
+#include<cstring>
+#include<algorithm>
+#include<time.h>
+using namespace std;
+
+long long FastPower(long long b,long long p,long long k) {
+	if(p==0) {
+		return 1%k;
+	}
+	int ans=1;
+	while(p>0) {
+//		int temp=1;
+		if(p&1) {
+			ans=ans*b%k;
+		}
+		p>>=1;
+		b=b*b%k;
+	}
+	return ans;
+}
+
+int main(){
+//	clock_t start,finish;
+	long long b,p,k;
+	scanf("%lld%lld%lld",&b,&p,&k);
+//	int s;
+	FastPower(b,p,k);
+	printf("%lld^%lld mod %lld=%lld",b,p,k,FastPower(b,p,k));
+//	cout<<double(finish-start)/CLOCKS_PER_SEC;
+	return 0;
+}
