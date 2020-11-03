@@ -97,7 +97,7 @@ long long FastPower(long long b,long long p,long long k) {
 	}
 	int ans=1;
 	while(p>0) {
-//		int temp=1;
+//		int ans=1;
 		if(p&1) {
 			ans=ans*b%k;
 		}
