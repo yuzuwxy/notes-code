@@ -22,7 +22,7 @@ ll read()
     now=now*flag;
     return now;
 }
-
+//求a的q次模m
 int main()
 { 
     b=read();
