@@ -1,0 +1,67 @@
+//为啥今天来了呢
+
+做了这么一道题，觉得map实在是太有用了
+
+https://ac.nowcoder.com/acm/contest/12794/B
+
+这个题的意思是呢，给出缩写和缩写表示的实际意思，比如：yyds 永远单身。这个样子，然后给出一句话，单词和单词之间用空格分开，要把这句含有所写的句子扩成完整的。
+
+#include<iostream>
+#include<cstdio>
+#include<string>
+#include<cstring>
+#include<cmath>
+#include<algorithm>
+#include<vector>
+#include<set>
+
+using namespace std;
+
+#define ll long long
+#define MAXN (int)1e5
+#define MOD (int)1e9+7
+
+int main() {
+    int n,m;
+    scanf("%d",&n);
+    getchar();
+    vector<string> sx(55);
+    string tr[100];
+    for(int i=1;i<=n;i++) {
+        string temp;
+        cin>>sx[i];
+        getchar();  
+        getline(cin,tr[i]);
+    }
+    scanf("%d",&m);
+    getchar();
+    int arr[MAXN]={0};
+    for(int i=1;i<=m;i++) {
+        string se;
+        getline(cin,se);
+        int len=se.size();
+        for(int j=1;j<=n;j++) {
+            size_t pos=se.find(sx[j],0);      //这里，虽然每个缩写各不相同，用find找待翻译的句子里有什么缩写出现还是有bug。比如一个缩写是另一个缩写的子串，那我最后对应哪个呢？就会出错
+            if(pos!=string :: npos) {
+                arr[(int)pos]=j;
+            }
+        }
+        for(int j=0;j<len;j++) {
+            if(arr[j]!=0&&(j==0||(j>0&&se[j-1]==' '))&&(se[j+sx[arr[j]].size()]==' '||(j+(int)sx[arr[j]].size()==len))) {
+                printf("%s",tr[arr[j]].c_str());
+                j+=sx[arr[j]].size();
+            }
+            if(j!=len)
+                printf("%c",se[j]);
+        }
+        printf("\n");
+    }
+    return 0;
+}
+
+
+//这是我的垃圾代码，拿到测试数据之后才发现了问题。
+//甚至还想过hash，但是实在不会。
+
+//然后去看了标程，发现map真是惊人的好用。
+定义map<string,string> s 甚至可以直接拿字符串当索引，我天梦想中的生活。
